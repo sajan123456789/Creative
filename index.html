@@ -3,52 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative | The Ultimate No-Code Builder</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Creative | Premium No-Code Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.3);
+            --bg: #020617;
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Gradient Background Overlay */
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.05) 0%, transparent 50%);
+        }
+
+        h1, h2, h3, .logo { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 800; color: #fff; letter-spacing: -1px; }
+        .logo span { color: var(--primary); }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary { background: var(--primary); color: #000; box-shadow: 0 4px 14px 0 var(--primary-glow); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px 0 var(--primary-glow); }
+
+        /* --- ADSENSE SLOTS --- */
+        .ad-slot {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            margin: 30px 0;
+            padding: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero { text-align: center; padding: 80px 0 60px; }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.1; margin-bottom: 20px; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { color: var(--text-muted); max-width: 600px; margin: 0 auto 35px; font-size: 1.1rem; }
+
+        /* --- FEATURE GRID --- */
+        .section-label { text-align: center; color: var(--primary); font-weight: 600; font-size: 0.9rem; margin-bottom: 15px; display: block; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 40px; }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: 0.4s ease;
+        }
+
+        .glass-card:hover { border-color: var(--primary); transform: translateY(-5px); background: rgba(15, 23, 42, 0.8); }
+        .glass-card h3 { margin-bottom: 12px; font-size: 1.3rem; }
+        .glass-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- FOOTER --- */
+        footer {
+            margin-top: 80px;
+            padding: 60px 0 30px;
+            border-top: 1px solid var(--border);
+            background: rgba(2, 6, 23, 0.8);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 { margin-bottom: 20px; font-size: 1rem; color: #fff; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 12px; }
+        .footer-col a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+        .footer-col a:hover { color: var(--primary); }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 768px) {
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+            .hero { padding: 50px 0; }
+        }
+    </style>
 </head>
 <body>
 
-    <nav class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 25px 20px;">
-        <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">Creative.</div>
-        <div style="display: flex; gap: 15px;">
-            <a href="login.html" style="color: white; text-decoration: none; font-weight: 600; margin-top: 10px;">Login</a>
-            <a href="create.html" class="btn btn-primary">Start Building</a>
-        </div>
-    </nav>
+    <div class="container">
+        <nav>
+            <div class="logo">Creative<span>.</span></div>
+            <a href="#" class="btn btn-primary">Start Building</a>
+        </nav>
 
-    <div class="ad-slot">AdSense Banner Ad 728x90</div>
+        <div class="ad-slot">Google AdSense - Header Ad Placement</div>
 
-    <header class="container" style="text-align: center; padding: 80px 0;">
-        <h1 style="font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 25px;">
-            Build Professional Sites <br><span style="color: var(--primary)">In Minutes.</span>
-        </h1>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; font-size: 1.2rem;">
-            A high-performance alternative to WordPress. SEO optimized, AdSense ready, and 100% free hosting compatible.
-        </p>
-        <div style="display: flex; gap: 15px; justify-content: center;">
-            <a href="create.html" class="btn btn-primary" style="padding: 16px 40px;">Create Website Free</a>
-        </div>
-    </header>
+        <header class="hero">
+            <h1>Build Professional Sites<br><span>In Minutes.</span></h1>
+            <p>A high-performance alternative to WordPress. SEO optimized, AdSense ready, and 100% free hosting compatible.</p>
+            <a href="#" class="btn btn-primary" style="padding: 16px 40px;">Create Website Free</a>
+        </header>
 
-    <section class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; padding-bottom: 80px;">
-        <div class="glass-card">
-            <h3 style="margin-bottom: 15px;">E-Commerce Ready</h3>
-            <p style="color: var(--text-muted);">Launch premium stores without any database hassle.</p>
+        <span class="section-label">THE PLATFORM FEATURES</span>
+        <div class="grid">
+            <div class="glass-card">
+                <h3>E-Commerce Ready</h3>
+                <p>Launch premium stores without any database hassle. Fast, secure, and ready to scale.</p>
+            </div>
+            <div class="glass-card">
+                <h3>PWA Technology</h3>
+                <p>Convert your web apps to mobile apps with one click. Offline support and push notifications ready.</p>
+            </div>
+            <div class="glass-card">
+                <h3>No Code Export</h3>
+                <p>Get clean HTML/CSS code that you own forever. No monthly subscriptions to keep your site live.</p>
+            </div>
         </div>
-        <div class="glass-card">
-            <h3 style="margin-bottom: 15px;">PWA Technology</h3>
-            <p style="color: var(--text-muted);">Convert your web apps to mobile apps with one click.</p>
-        </div>
-        <div class="glass-card">
-            <h3 style="margin-bottom: 15px;">No Code Export</h3>
-            <p style="color: var(--text-muted);">Get clean HTML/CSS code that you own forever.</p>
-        </div>
-    </section>
 
-    <div class="ad-slot">AdSense Responsive Content Ad</div>
+        <div class="ad-slot">Google AdSense - Responsive Content Ad</div>
+    </div>
 
-    <footer class="container" style="border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--text-muted);">
-        <p>AdSense Friendly & SEO Optimized Platform &copy; 2026</p>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 15px;">Creative<span>.</span></div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Building the future of the no-code web. Fast, open, and accessible for everyone.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Templates</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Showcase</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Creative Builder. Designed for high-performance AdSense & SEO.
+            </div>
+        </div>
     </footer>
 
 </body>
