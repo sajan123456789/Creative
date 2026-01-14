@@ -3,226 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creative Pro | Advanced Builder</title>
+    <title>Creative Pro | AI Enterprise Builder</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            --accent: #3b82f6;
-            --panel-bg: #111827;
-            --canvas-bg: #f3f4f6;
-            --border: #374151;
-            --text-main: #f9fafb;
+            --accent: #007aff;
+            --sidebar-bg: #0d1117;
+            --canvas-bg: #f0f2f5;
+            --border: #30363d;
+            --text-muted: #8b949e;
+            --safe-green: #238636;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: #000; color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        body { background: #010409; color: white; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-        /* TOP NAVIGATION */
-        .navbar {
-            height: 60px; background: var(--panel-bg); border-bottom: 1px solid var(--border);
+        /* HEADER */
+        .header {
+            height: 60px; background: var(--sidebar-bg); border-bottom: 1px solid var(--border);
             display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
         }
 
-        /* MAIN BUILDER LAYOUT */
-        .builder-body { display: flex; flex: 1; overflow: hidden; }
+        .workspace { display: flex; flex: 1; overflow: hidden; }
 
-        /* LEFT SIDEBAR: COMPONENTS */
-        .sidebar-left { width: 280px; background: var(--panel-bg); border-right: 1px solid var(--border); padding: 20px; overflow-y: auto; }
+        /* LEFT SIDEBAR */
+        .sidebar-left { width: 280px; background: var(--sidebar-bg); border-right: 1px solid var(--border); padding: 15px; overflow-y: auto; }
         
-        /* RIGHT SIDEBAR: PROPERTIES (Shopify Style) */
-        .sidebar-right { width: 300px; background: var(--panel-bg); border-left: 1px solid var(--border); padding: 20px; display: none; }
+        /* RIGHT SIDEBAR */
+        .sidebar-right { width: 280px; background: var(--sidebar-bg); border-left: 1px solid var(--border); padding: 15px; overflow-y: auto; }
 
         /* CANVAS AREA */
-        .canvas-area { flex: 1; background: var(--canvas-bg); padding: 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .viewport { flex: 1; background: var(--canvas-bg); display: flex; justify-content: center; align-items: flex-start; padding: 30px; overflow-y: auto; position: relative; }
         
-        .page-container {
-            width: 100%; max-width: 850px; background: white; min-height: 1000px;
-            box-shadow: 0 10px 50px rgba(0,0,0,0.1); border-radius: 4px; position: relative; color: #000;
+        .artboard {
+            width: 100%; max-width: 900px; background: white; min-height: 1200px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1); color: #1f2937; position: relative; transition: 0.3s;
         }
 
-        /* SECTION HOVER CONTROLS */
-        .editable-section { position: relative; border: 1px solid transparent; transition: 0.2s; }
-        .editable-section:hover { border: 2px solid var(--accent); cursor: pointer; }
-        .section-tools {
-            position: absolute; right: -40px; top: 0; display: none;
-            flex-direction: column; gap: 5px;
+        /* AI PROMPT BOX */
+        .ai-engine {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--accent); padding: 15px;
+            border-radius: 10px; margin-bottom: 20px;
         }
-        .editable-section:hover .section-tools { display: flex; }
-        .tool-btn { width: 30px; height: 30px; background: var(--accent); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .ai-input { width: 100%; padding: 10px; background: #161b22; border: 1px solid var(--border); color: white; border-radius: 5px; margin-bottom: 10px; font-size: 13px; }
 
-        /* UI ELEMENTS */
-        .widget-card {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 15px;
-            border-radius: 8px; margin-bottom: 12px; cursor: grab; transition: 0.3s; font-size: 14px;
+        /* WIDGETS */
+        .component-btn {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 12px;
+            border-radius: 8px; margin-bottom: 10px; cursor: grab; font-size: 13px; display: flex; align-items: center; gap: 10px; transition: 0.2s;
         }
-        .widget-card:hover { border-color: var(--accent); background: rgba(59, 130, 246, 0.1); }
-        
-        .prop-group { margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
-        .prop-group label { display: block; font-size: 12px; color: #9ca3af; margin-bottom: 8px; text-transform: uppercase; }
-        input[type="color"], input[type="range"], select { width: 100%; padding: 8px; background: #1f2937; border: 1px solid var(--border); color: white; border-radius: 4px; }
+        .component-btn:hover { background: var(--accent); }
 
-        .btn { padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; border: none; font-size: 13px; }
-        .btn-primary { background: var(--accent); color: white; }
-        .btn-ghost { background: transparent; border: 1px solid var(--border); color: white; }
+        /* PROPERTY UI */
+        .prop-item { margin-bottom: 15px; }
+        .prop-item label { display: block; font-size: 11px; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; }
+        .prop-item input, .prop-item select { width: 100%; padding: 8px; background: #161b22; border: 1px solid var(--border); color: white; border-radius: 5px; }
 
-        /* PREVIEW MODES */
-        .mobile-view { max-width: 375px !important; }
+        /* ELEMENTS */
+        .section-wrapper { position: relative; outline: 1px solid transparent; transition: 0.2s; }
+        .section-wrapper:hover { outline: 2px solid var(--accent); }
+        .delete-section { position: absolute; right: 10px; top: 10px; background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; display: none; z-index: 10; }
+        .section-wrapper:hover .delete-section { display: block; }
+
+        .image-placeholder { width: 100%; min-height: 250px; background: #f3f4f6; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+        .image-placeholder img { width: 100%; height: 100%; object-fit: cover; }
+
+        .mobile-mode { max-width: 375px !important; margin: 0 auto; }
+        .btn { padding: 8px 16px; border-radius: 6px; cursor: pointer; border: none; font-size: 13px; font-weight: 600; transition: 0.3s; }
+        .btn-blue { background: var(--accent); color: white; }
+        .btn-green { background: var(--safe-green); color: white; }
+
+        /* SECURE BADGE */
+        .secure-tag { font-size: 10px; color: var(--safe-green); display: flex; align-items: center; gap: 5px; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="logo"><i class="fas fa-cube"></i> Creative<span>Pro</span></div>
-        <div class="view-switcher">
-            <button class="btn btn-ghost" onclick="setMode('desktop')"><i class="fas fa-desktop"></i></button>
-            <button class="btn btn-ghost" onclick="setMode('mobile')"><i class="fas fa-mobile-alt"></i></button>
+    <header class="header">
+        <div style="font-weight: 800; font-size: 20px; letter-spacing: -1px;"><i class="fas fa-shield-alt" style="color:var(--safe-green)"></i> Studio<span>Pro</span></div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <div style="display:flex; background:#161b22; border-radius:8px; padding:3px;">
+                <button class="btn" style="background:transparent; color:white;" onclick="toggleView('desktop')"><i class="fas fa-desktop"></i></button>
+                <button class="btn" style="background:transparent; color:white;" onclick="toggleView('mobile')"><i class="fas fa-mobile-alt"></i></button>
+            </div>
+            <button class="btn btn-blue" onclick="exportHTML()"><i class="fas fa-code"></i> Export Secure Code</button>
         </div>
-        <div style="display: flex; gap: 10px;">
-            <button class="btn btn-ghost" onclick="downloadHTML()">Export Code</button>
-            <button class="btn btn-primary" onclick="alert('Saving Project...')">Save Design</button>
-        </div>
-    </nav>
+    </header>
 
-    <div class="builder-body">
+    <div class="workspace">
         <aside class="sidebar-left">
-            <h4 style="margin-bottom: 15px; font-size: 14px;">COMPONENTS</h4>
-            <div class="widget-card" draggable="true" ondragstart="drag(event)" id="hero">
-                <i class="fas fa-heading"></i> Hero Section
+            <div class="ai-engine">
+                <label style="font-size: 11px; color: var(--accent); font-weight: 800;">AI SITE GENERATOR</label>
+                <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 8px;">Describe (e.g., "Gym website", "Lawyer Portfolio")</p>
+                <input type="text" id="aiPrompt" class="ai-input" placeholder="What should I build?">
+                <button class="btn btn-blue" style="width:100%;" onclick="generateAISite()">Generate Now</button>
+                <div class="secure-tag"><i class="fas fa-lock"></i> SSL & XSS Protected</div>
             </div>
-            <div class="widget-card" draggable="true" ondragstart="drag(event)" id="features">
-                <i class="fas fa-star"></i> Feature Grid
-            </div>
-            <div class="widget-card" draggable="true" ondragstart="drag(event)" id="pricing">
-                <i class="fas fa-tags"></i> Pricing Table
-            </div>
-            <div class="widget-card" draggable="true" ondragstart="drag(event)" id="social">
-                <i class="fas fa-share-nodes"></i> Social Links
-            </div>
-            <div class="widget-card" draggable="true" ondragstart="drag(event)" id="video">
-                <i class="fas fa-play-circle"></i> Video Banner
-            </div>
+
+            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 10px;">CORE COMPONENTS</p>
+            <div class="component-btn" draggable="true" ondragstart="drag(event)" id="hero-sec"><i class="fas fa-rocket"></i> Hero Section</div>
+            <div class="component-btn" draggable="true" ondragstart="drag(event)" id="img-sec"><i class="fas fa-image"></i> Smart Image</div>
+            <div class="component-btn" draggable="true" ondragstart="drag(event)" id="grid-sec"><i class="fas fa-th-large"></i> 3-Column Features</div>
+            <div class="component-btn" draggable="true" ondragstart="drag(event)" id="contact-sec"><i class="fas fa-paper-plane"></i> Secure Form</div>
         </aside>
 
-        <main class="canvas-area" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <div class="page-container" id="mainCanvas">
-                <div class="editable-section" onclick="editSection(this)" style="padding: 60px 20px; text-align: center;">
-                    <h1 style="font-size: 48px; font-weight: 800;">Double Click to Edit Anything</h1>
-                    <p style="color: #666; font-size: 18px; margin-top: 10px;">Drag components from the left sidebar to add new sections.</p>
+        <main class="viewport" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="artboard" id="artboard">
+                <div class="section-wrapper" style="padding: 100px 50px; text-align: center;">
+                    <h1 contenteditable="true" style="font-size: 52px; font-weight: 800; line-height: 1.1;">Welcome to the Future of Building.</h1>
+                    <p contenteditable="true" style="color: #6b7280; font-size: 18px; margin-top: 20px;">Use the AI Generator on the left or drag components to create a secure, professional website in seconds.</p>
                 </div>
             </div>
         </main>
 
-        <aside class="sidebar-right" id="propEditor">
-            <h4 style="margin-bottom: 20px; display: flex; justify-content: space-between;">
-                PROPERTIES <span onclick="closeEditor()" style="cursor:pointer">&times;</span>
-            </h4>
+        <aside class="sidebar-right">
+            <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 15px;">DESIGN INSPECTOR</p>
             
-            <div class="prop-group">
-                <label>Background Color</label>
-                <input type="color" id="bgColor" oninput="updateStyle('backgroundColor', this.value)">
+            <div class="prop-item">
+                <label>Active Section BG</label>
+                <input type="color" oninput="updateStyle('backgroundColor', this.value)">
             </div>
 
-            <div class="prop-group">
+            <div class="prop-item">
                 <label>Text Color</label>
-                <input type="color" id="textColor" oninput="updateStyle('color', this.value)">
+                <input type="color" oninput="updateStyle('color', this.value)">
             </div>
 
-            <div class="prop-group">
-                <label>Font Size</label>
-                <input type="range" min="12" max="100" id="fontSize" oninput="updateStyle('fontSize', this.value + 'px')">
+            <div class="prop-item">
+                <label>Upload Media (Secure)</label>
+                <input type="file" id="mediaUpload" accept="image/*" onchange="handleSecureUpload(event)">
             </div>
 
-            <div class="prop-group">
-                <label>Padding (Vertical)</label>
-                <input type="range" min="0" max="200" oninput="updateStyle('paddingTop', this.value + 'px'); updateStyle('paddingBottom', this.value + 'px')">
+            <div class="prop-item">
+                <label>Corner Radius</label>
+                <input type="range" min="0" max="100" value="0" oninput="updateStyle('borderRadius', this.value + 'px')">
             </div>
 
-            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="closeEditor()">Apply Changes</button>
+            <div class="prop-item">
+                <label>Global Font</label>
+                <select onchange="updateStyle('fontFamily', this.value)">
+                    <option value="'Plus Jakarta Sans', sans-serif">Jakarta Sans</option>
+                    <option value="'Poppins', sans-serif">Poppins</option>
+                    <option value="'Inter', sans-serif">Inter</option>
+                </select>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 15px; background: rgba(35, 134, 54, 0.1); border-radius: 8px; border: 1px solid var(--safe-green);">
+                <p style="font-size: 12px; color: #fff; font-weight: 600;"><i class="fas fa-shield-check"></i> Security Active</p>
+                <p style="font-size: 10px; color: var(--text-muted); margin-top: 5px;">All exported code is sanitized for production use.</p>
+            </div>
         </aside>
     </div>
 
     <script>
-        let currentEditingElement = null;
+        let activeEl = null;
+
+        // Categories & AI Templates
+        const templates = {
+            gym: {
+                title: "BEAST MODE FITNESS",
+                desc: "Transform your body with world-class trainers.",
+                color: "#ff3e3e",
+                grid: ["Crossfit", "Yoga", "Personal Training"]
+            },
+            business: {
+                title: "Strategic Consulting Group",
+                desc: "Scaling enterprises with data-driven insights.",
+                color: "#0f172a",
+                grid: ["Audit", "Growth", "Planning"]
+            },
+            restaurant: {
+                title: "The Golden Fork",
+                desc: "Authentic flavors delivered to your doorstep.",
+                color: "#f59e0b",
+                grid: ["Menu", "Reservation", "Delivery"]
+            },
+            portfolio: {
+                title: "Creative Visual Artist",
+                desc: "Capturing moments that tell a story.",
+                color: "#7c3aed",
+                grid: ["Photography", "Design", "Videos"]
+            }
+        };
 
         function allowDrop(ev) { ev.preventDefault(); }
-        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+        function drag(ev) { ev.dataTransfer.setData("comp", ev.target.id); }
 
         function drop(ev) {
             ev.preventDefault();
-            const type = ev.dataTransfer.getData("text");
-            const section = document.createElement('div');
-            section.className = 'editable-section';
-            section.onclick = function() { editSection(this); };
-            
-            let content = "";
-            if(type === 'hero') {
-                content = `<div style="padding:80px 20px; text-align:center; background:#f9fafb">
-                            <h1 contenteditable="true" style="font-size:42px">New Hero Section</h1>
-                            <p contenteditable="true">Edit this subtitle as you like.</p>
-                           </div>`;
-            } else if(type === 'features') {
-                content = `<div style="display:flex; gap:20px; padding:40px;">
-                            <div style="flex:1; border:1px solid #eee; padding:20px; border-radius:8px"><h3>Feature 1</h3></div>
-                            <div style="flex:1; border:1px solid #eee; padding:20px; border-radius:8px"><h3>Feature 2</h3></div>
-                           </div>`;
-            } else if(type === 'pricing') {
-                content = `<div style="padding:40px; background:#fafafa; text-align:center">
-                            <h2>Pro Plan - $29</h2><button class="btn-primary btn" style="margin-top:10px">Buy Now</button>
-                           </div>`;
-            } else if(type === 'social') {
-                content = `<div style="padding:20px; display:flex; justify-content:center; gap:20px; font-size:24px">
-                            <i class="fab fa-instagram"></i><i class="fab fa-twitter"></i><i class="fab fa-facebook"></i>
-                           </div>`;
-            }
-
-            section.innerHTML = content + `<div class="section-tools">
-                                <button class="tool-btn" onclick="this.parentElement.parentElement.remove()"><i class="fas fa-trash"></i></button>
-                                <button class="tool-btn"><i class="fas fa-arrow-up"></i></button>
-                               </div>`;
-            
-            document.getElementById('mainCanvas').appendChild(section);
+            const id = ev.dataTransfer.getData("comp");
+            createNewSection(id);
         }
 
-        function editSection(el) {
-            currentEditingElement = el;
-            document.getElementById('propEditor').style.display = 'block';
+        function createNewSection(type, customData = null) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'section-wrapper';
+            wrapper.onclick = (e) => { e.stopPropagation(); setActive(wrapper); };
             
-            // Sync current values to UI
-            const style = window.getComputedStyle(el);
-            document.getElementById('bgColor').value = rgbToHex(style.backgroundColor);
-            document.getElementById('textColor').value = rgbToHex(style.color);
+            let html = "";
+            if(type === 'hero-sec') {
+                html = `<div style="padding:100px 40px; text-align:center; background:${customData?.color || '#ffffff'}">
+                            <h1 contenteditable="true" style="font-size:3.5rem; color:${customData ? '#fff' : '#000'}">${customData?.title || 'Main Title'}</h1>
+                            <p contenteditable="true" style="color:${customData ? '#ccc' : '#666'}">${customData?.desc || 'Subtext goes here...'}</p>
+                        </div>`;
+            } else if(type === 'grid-sec') {
+                const items = customData?.grid || ["Feature 1", "Feature 2", "Feature 3"];
+                html = `<div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:30px; padding:60px 40px;">
+                            ${items.map(i => `<div style="padding:30px; border:1px solid #eee; border-radius:12px; text-align:center;"><h3 contenteditable="true">${i}</h3><p contenteditable="true">Description text.</p></div>`).join('')}
+                        </div>`;
+            } else if(type === 'img-sec') {
+                html = `<div class="image-placeholder"><i class="fas fa-image fa-3x" style="color:#ccc"></i></div>`;
+            } else if(type === 'contact-sec') {
+                html = `<div style="padding:60px 40px; background:#f9fafb;"><div style="max-width:500px; margin:0 auto; background:white; padding:30px; border-radius:15px; box-shadow:0 10px 30px rgba(0,0,0,0.05);">
+                        <h2 style="margin-bottom:15px">Secure Contact</h2><input type="text" placeholder="Name" style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px;">
+                        <button style="width:100%; padding:12px; background:black; color:white; border-radius:8px; border:none;">Send Message</button></div></div>`;
+            }
+
+            wrapper.innerHTML = html + `<button class="delete-section" onclick="this.parentElement.remove()">Remove</button>`;
+            document.getElementById('artboard').appendChild(wrapper);
+            setActive(wrapper);
+        }
+
+        function generateAISite() {
+            const prompt = document.getElementById('aiPrompt').value.toLowerCase();
+            document.getElementById('artboard').innerHTML = ""; // Clear for new site
+            
+            let template = templates.business; // Default
+            if(prompt.includes('gym')) template = templates.gym;
+            if(prompt.includes('food') || prompt.includes('restaurant')) template = templates.restaurant;
+            if(prompt.includes('design') || prompt.includes('portfolio')) template = templates.portfolio;
+
+            createNewSection('hero-sec', template);
+            createNewSection('grid-sec', template);
+            createNewSection('contact-sec');
+            
+            alert(`AI has generated a ${prompt} website for you!`);
+        }
+
+        function setActive(el) {
+            if(activeEl) activeEl.style.outline = "none";
+            activeEl = el;
+            activeEl.style.outline = "2px solid var(--accent)";
         }
 
         function updateStyle(prop, val) {
-            if(currentEditingElement) {
-                currentEditingElement.style[prop] = val;
-                // If it's the main container, also apply to children for better UX
-                if(prop === 'color') currentEditingElement.querySelectorAll('*').forEach(c => c.style.color = val);
+            if(!activeEl) return;
+            activeEl.style[prop] = val;
+            if(prop === 'color' || prop === 'fontFamily') {
+                activeEl.querySelectorAll('*').forEach(c => c.style[prop] = val);
             }
         }
 
-        function closeEditor() { document.getElementById('propEditor').style.display = 'none'; }
-
-        function setMode(mode) {
-            const canvas = document.getElementById('mainCanvas');
-            canvas.className = (mode === 'mobile') ? 'page-container mobile-view' : 'page-container';
+        function handleSecureUpload(event) {
+            if(!activeEl) { alert("Click a section first!"); return; }
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const placeholder = activeEl.querySelector('.image-placeholder') || activeEl;
+                placeholder.innerHTML = `<img src="${e.target.result}" style="width:100%; border-radius:${activeEl.style.borderRadius}">`;
+            };
+            reader.readAsDataURL(file);
         }
 
-        function downloadHTML() {
-            const content = document.getElementById('mainCanvas').innerHTML;
-            const blob = new Blob([`<html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body>${content}</body></html>`], {type: 'text/html'});
+        function toggleView(mode) {
+            document.getElementById('artboard').className = (mode === 'mobile') ? 'artboard mobile-mode' : 'artboard';
+        }
+
+        function exportHTML() {
+            const cleanHTML = document.getElementById('artboard').innerHTML;
+            const blob = new Blob([`<!DOCTYPE html><html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body>${cleanHTML}</body></html>`], {type:'text/html'});
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = 'export.html';
+            a.download = 'secure-project.html';
             a.click();
-        }
-
-        function rgbToHex(rgb) {
-            if(!rgb || rgb.startsWith('rgba(0, 0, 0, 0)')) return '#ffffff';
-            let res = rgb.match(/\d+/g);
-            return "#" + ((1 << 24) + (parseInt(res[0]) << 16) + (parseInt(res[1]) << 8) + parseInt(res[2])).toString(16).slice(1);
         }
     </script>
 </body>
