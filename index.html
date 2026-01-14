@@ -24,7 +24,7 @@
 body{
   background:var(--bg);
   color:var(--text);
-  line-height:1.65;
+  line-height:1.8; /* Increased for better readability */
 }
 
 .container{
@@ -33,155 +33,172 @@ body{
   padding:0 24px;
 }
 
-/* NAV */
+/* NAV - Clean & Spaced */
 nav{
   position:sticky;
   top:0;
-  background:rgba(2,6,23,.85);
-  backdrop-filter:blur(10px);
+  background:rgba(2,6,23,.9);
+  backdrop-filter:blur(15px);
   border-bottom:1px solid var(--border);
-  z-index:10;
+  z-index:100;
 }
 
 .nav-inner{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:18px 0;
+  padding:20px 0; /* Slightly more height */
 }
 
 .logo{
   font-weight:800;
-  font-size:1.5rem;
+  font-size:1.6rem;
   text-decoration:none;
   color:#fff;
+  letter-spacing:-1px;
 }
 
 .logo span{color:var(--primary);}
 
 .nav-actions a{
-  margin-left:18px;
-  font-size:.9rem;
+  margin-left:24px;
+  font-size:.95rem;
   text-decoration:none;
   color:var(--muted);
   font-weight:500;
+  transition: 0.3s;
 }
+
+.nav-actions a:hover { color: var(--primary); }
 
 .btn{
   background:var(--primary);
   color:#000;
-  padding:10px 22px;
-  border-radius:10px;
+  padding:12px 26px;
+  border-radius:12px;
   font-weight:700;
   text-decoration:none;
-  box-shadow:0 6px 18px var(--primary-soft);
+  box-shadow:0 8px 20px var(--primary-soft);
+  transition: 0.3s;
 }
 
-/* HERO */
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px var(--primary-soft); }
+
+/* HERO - Spacious Layout */
 .hero{
   text-align:center;
-  padding:90px 0 70px;
+  padding:120px 0 90px; /* More vertical space */
 }
 
 .badge{
   display:inline-block;
-  padding:6px 16px;
+  padding:8px 20px;
   border-radius:99px;
+  background: rgba(56, 189, 248, 0.05);
   border:1px solid var(--primary-soft);
   color:var(--primary);
-  font-size:.8rem;
+  font-size:.85rem;
   font-weight:600;
-  margin-bottom:26px;
+  margin-bottom:32px;
 }
 
 .hero h1{
-  font-size:clamp(2.4rem,7vw,3.8rem);
+  font-size:clamp(2.6rem,8vw,4.2rem);
   font-weight:800;
   line-height:1.1;
-  margin-bottom:20px;
-  letter-spacing:-1.5px;
+  margin-bottom:28px;
+  letter-spacing:-2px;
 }
 
 .hero h1 span{color:var(--primary);}
 
 .hero p{
-  max-width:680px;
+  max-width:720px;
   margin:auto;
-  font-size:1.1rem;
+  font-size:1.2rem;
   color:var(--muted);
 }
 
 .hero .btn{
-  margin-top:36px;
-  padding:16px 44px;
-  font-size:1rem;
+  margin-top:48px;
+  padding:18px 54px;
+  font-size:1.1rem;
 }
 
 /* TRUST STRIP */
 .trust{
   display:flex;
   justify-content:center;
-  gap:28px;
+  gap:40px; /* Wider gap */
   flex-wrap:wrap;
-  margin-top:50px;
+  margin-top:70px;
   color:var(--muted);
-  font-size:.9rem;
+  font-size:.95rem;
+  opacity: 0.8;
 }
 
-/* FEATURES */
+/* FEATURES - Grid Spacing */
 .section{
-  padding:80px 0;
+  padding:120px 0; /* Huge space between sections */
 }
 
 .section h2{
   text-align:center;
-  font-size:2.2rem;
-  font-weight:700;
-  margin-bottom:12px;
+  font-size:2.6rem;
+  font-weight:800;
+  margin-bottom:16px;
+  letter-spacing: -1px;
 }
 
 .section p.lead{
   text-align:center;
   color:var(--muted);
-  max-width:640px;
-  margin:0 auto 50px;
+  max-width:680px;
+  margin:0 auto 60px;
+  font-size: 1.1rem;
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:26px;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:30px; /* More gap between cards */
 }
 
 .card{
   background:var(--card);
   border:1px solid var(--border);
-  border-radius:20px;
-  padding:36px;
-  transition:.3s;
+  border-radius:24px;
+  padding:44px; /* More internal breathing room */
+  transition:.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover{
   border-color:var(--primary);
-  transform:translateY(-6px);
+  transform:translateY(-10px);
+  background: rgba(11, 18, 32, 0.8);
 }
 
 .card h3{
-  font-size:1.3rem;
-  margin-bottom:14px;
+  font-size:1.5rem;
+  margin-bottom:16px;
+  color: #fff;
 }
 
 .card p{
   color:var(--muted);
-  font-size:.95rem;
+  font-size:1rem;
+  line-height: 1.7;
 }
 
-/* WHY */
+/* WHY US - Vertical Spacing */
 .why{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:50px;
-  margin-top:60px;
+  grid-template-columns: 1fr 1fr;
+  gap:60px;
+  margin-top:80px;
+  padding: 40px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 24px;
 }
 
 .why ul{
@@ -189,58 +206,69 @@ nav{
 }
 
 .why li{
-  padding:14px 0;
+  padding:18px 0;
   border-bottom:1px solid var(--border);
   color:var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
+
+.why li:last-child { border-bottom: none; }
 
 /* ADSENSE SAFE GAP */
 .ad-gap{
-  min-height:90px;
-  margin:60px 0;
+  min-height:100px;
+  margin:80px 0;
 }
 
-/* FOOTER */
+/* FOOTER - Professional & Structured */
 footer{
   border-top:1px solid var(--border);
   background:#010409;
-  padding:70px 0 40px;
+  padding:100px 0 50px;
 }
 
 .footer-grid{
   display:grid;
-  grid-template-columns:2fr 1fr 1fr 1fr;
-  gap:40px;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap:50px;
 }
 
 .footer-grid h4{
-  margin-bottom:18px;
-  font-size:.95rem;
+  margin-bottom:28px;
+  font-size:1.1rem;
+  color: #fff;
 }
 
 .footer-grid a{
   display:block;
   text-decoration:none;
   color:var(--muted);
-  font-size:.9rem;
-  margin-bottom:10px;
+  font-size:.95rem;
+  margin-bottom:14px;
+  transition: 0.3s;
 }
+
+.footer-grid a:hover { color: var(--primary); padding-left: 5px; }
 
 .footer-bottom{
   border-top:1px solid var(--border);
-  margin-top:50px;
-  padding-top:26px;
+  margin-top:80px;
+  padding-top:30px;
   display:flex;
   justify-content:space-between;
   color:var(--muted);
-  font-size:.85rem;
+  font-size:.9rem;
 }
 
-/* MOBILE */
+/* MOBILE RESPONSIVE */
 @media(max-width:900px){
-  .why{grid-template-columns:1fr;}
-  .footer-grid{grid-template-columns:1fr 1fr;}
-  .footer-bottom{flex-direction:column;gap:14px;text-align:center;}
+  .hero { padding: 80px 0 50px; }
+  .why{grid-template-columns:1fr; gap: 20px;}
+  .footer-grid{grid-template-columns:1fr 1fr; gap: 40px;}
+  .footer-bottom{flex-direction:column;gap:20px;text-align:center;}
+  .section { padding: 80px 0; }
 }
 </style>
 </head>
@@ -252,25 +280,25 @@ footer{
     <a class="logo" href="#">Creative<span>.</span></a>
     <div class="nav-actions">
       <a href="#">Login</a>
-      <a class="btn" href="#">Start Building</a>
+      <a class="btn" href="#">Get Started</a>
     </div>
   </div>
 </nav>
 
 <section class="hero container">
-  <div class="badge">No-Code • Free Hosting Compatible • AdSense Ready</div>
+  <div class="badge">Next-Gen Engine • No-Code Platform</div>
   <h1>Create Any Website or App<br><span>Without Coding</span></h1>
   <p>
-    Build business websites, blogs, portfolios, ecommerce stores & PWA apps.
-    No hosting setup, no plugins, no lock-in.
+    The ultimate high-performance alternative to traditional builders. 
+    Build business sites, portfolios, and stores with full code ownership.
   </p>
   <a href="#" class="btn">Create Website Free</a>
 
   <div class="trust">
     <span>⚡ Fast & Crash-Proof</span>
-    <span>🔓 Full Code Ownership</span>
-    <span>📈 SEO & AdSense Friendly</span>
-    <span>📱 Website → App (PWA)</span>
+    <span>🔓 Full Ownership</span>
+    <span>📈 AdSense Optimized</span>
+    <span>📱 One-Click PWA</span>
   </div>
 </section>
 
@@ -279,46 +307,46 @@ footer{
 <section class="section container">
   <h2>What You Can Build</h2>
   <p class="lead">
-    Everything needed to launch and grow online — without servers or complexity.
+    Everything you need to launch and grow your online presence — without the technical complexity.
   </p>
 
   <div class="grid">
     <div class="card">
       <h3>Business Websites</h3>
-      <p>Professional, fast, SEO-ready sites for services, startups and brands.</p>
+      <p>Professional, fast, SEO-ready sites for services, startups and global brands.</p>
     </div>
     <div class="card">
       <h3>Blogs & Content Sites</h3>
-      <p>AdSense-optimized layouts designed for traffic and long-term monetization.</p>
+      <p>Monetization-ready layouts designed for high traffic and AdSense revenue.</p>
     </div>
     <div class="card">
-      <h3>E-commerce Ready</h3>
-      <p>Product catalogs, payments & WhatsApp ordering — without heavy backends.</p>
+      <h3>E-commerce Stores</h3>
+      <p>Sell products via WhatsApp or direct checkout without any heavy backend setup.</p>
     </div>
     <div class="card">
-      <h3>Portfolio & Resume</h3>
-      <p>Clean personal sites for students, freelancers and professionals.</p>
+      <h3>Portfolios</h3>
+      <p>Stunning personal sites for students, freelancers and creative professionals.</p>
     </div>
     <div class="card">
       <h3>Landing Pages</h3>
-      <p>Conversion-focused pages for ads, launches and campaigns.</p>
+      <p>High-conversion pages designed specifically for marketing campaigns and ads.</p>
     </div>
     <div class="card">
-      <h3>Website → App</h3>
-      <p>Turn your website into an installable mobile app using PWA.</p>
+      <h3>Mobile Apps (PWA)</h3>
+      <p>Turn any website into an installable mobile app with offline capabilities.</p>
     </div>
   </div>
 
   <div class="why">
     <ul>
-      <li>✔ Works perfectly on free hosting (GitHub, Netlify, Cloudflare)</li>
-      <li>✔ No database, no server crashes</li>
-      <li>✔ Export clean HTML/CSS/JS</li>
+      <li>✔ Works on free hosting (GitHub, Netlify)</li>
+      <li>✔ Zero database, zero crashes</li>
+      <li>✔ Clean HTML/CSS code export</li>
     </ul>
     <ul>
-      <li>✔ Designed for SEO & Google AdSense</li>
-      <li>✔ No vendor lock-in</li>
-      <li>✔ Built for speed and scalability</li>
+      <li>✔ SEO & Google AdSense optimized</li>
+      <li>✔ Full ownership, no vendor lock-in</li>
+      <li>✔ Built for extreme speed & scale</li>
     </ul>
   </div>
 </section>
@@ -329,34 +357,34 @@ footer{
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a class="logo" href="#">Creative<span>.</span></a>
-        <p style="color:var(--muted);max-width:260px;font-size:.9rem;">
-          A lightweight no-code platform built for speed, ownership and monetization.
+        <a class="logo" href="#" style="display:block; margin-bottom: 20px;">Creative<span>.</span></a>
+        <p style="color:var(--muted);max-width:280px;font-size:.95rem;">
+          A lightweight no-code builder for modern creators who value speed and ownership.
         </p>
       </div>
       <div>
-        <h4>Platform</h4>
+        <h4>Product</h4>
         <a href="#">Templates</a>
-        <a href="#">Website Builder</a>
-        <a href="#">PWA Apps</a>
+        <a href="#">App Builder</a>
+        <a href="#">Export Code</a>
       </div>
       <div>
         <h4>Company</h4>
-        <a href="#">About</a>
+        <a href="#">About Us</a>
         <a href="#">Privacy Policy</a>
-        <a href="#">Contact</a>
+        <a href="#">Contact Support</a>
       </div>
       <div>
-        <h4>Resources</h4>
+        <h4>Community</h4>
         <a href="#">Documentation</a>
-        <a href="#">Guides</a>
-        <a href="#">Community</a>
+        <a href="#">Tutorials</a>
+        <a href="#">Showcase</a>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <span>© 2026 Creative. All rights reserved.</span>
-      <span>AdSense Friendly • SEO Optimized • High Performance</span>
+      <span>© 2026 Creative Platform. All rights reserved.</span>
+      <span>Designed for SEO & AdSense • Secure & Fast</span>
     </div>
   </div>
 </footer>
