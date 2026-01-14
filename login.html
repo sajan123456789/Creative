@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login & Signup — Creative</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #38bdf8;
+  --bg: #020617;
+  --card: #0b1220;
+  --border: rgba(255,255,255,.08);
+  --text: #f8fafc;
+  --muted: #94a3b8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+body { 
+  background: var(--bg); 
+  color: var(--text); 
+  height: 100vh; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  background-image: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1), transparent 80%);
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 40px;
+  border-radius: 28px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+.logo-center { text-align: center; margin-bottom: 30px; font-weight: 800; font-size: 1.8rem; }
+.logo-center span { color: var(--primary); }
+
+/* Social Login Buttons */
+.social-auth { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+
+.btn-social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-social:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--muted); }
+.btn-social img { width: 20px; height: 20px; }
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 24px 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+.divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--border); }
+.divider:not(:empty)::before { margin-right: 15px; }
+.divider:not(:empty)::after { margin-left: 15px; }
+
+/* Tabs */
+.tabs { display: flex; margin-bottom: 30px; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 5px; }
+.tab { 
+  flex: 1; 
+  text-align: center; 
+  padding: 10px; 
+  cursor: pointer; 
+  color: var(--muted); 
+  font-weight: 600; 
+  border-radius: 8px;
+  transition: 0.3s;
+  font-size: 0.9rem;
+}
+.tab.active { background: var(--primary); color: #000; }
+
+/* Form Fields */
+.form-group { margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: var(--muted); }
+input {
+  width: 100%;
+  padding: 14px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: #fff;
+  outline: none;
+  transition: 0.3s;
+}
+input:focus { border-color: var(--primary); background: rgba(255,255,255,0.05); }
+
+.btn-auth {
+  width: 100%;
+  padding: 15px;
+  background: var(--primary);
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+.btn-auth:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(56, 189, 248, 0.3); }
+
+#signup-form { display: none; }
+.footer-text { text-align: center; margin-top: 25px; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<div class="auth-card">
+  <div class="logo-center">Creative<span>.</span></div>
+
+  <div class="social-auth">
+    <button class="btn-social" onclick="location.href='dashboard.html'">
+      <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google">
+      Continue with Google
+    </button>
+    <button class="btn-social" onclick="location.href='dashboard.html'">
+      <img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub" style="filter: invert(1);">
+      Continue with GitHub
+    </button>
+  </div>
+
+  <div class="divider">OR USE EMAIL</div>
+  
+  <div class="tabs">
+    <div class="tab active" id="login-tab" onclick="switchTab('login')">Login</div>
+    <div class="tab" id="signup-tab" onclick="switchTab('signup')">Create Account</div>
+  </div>
+
+  <form id="login-form" onsubmit="event.preventDefault(); location.href='dashboard.html'">
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" placeholder="name@company.com" required>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" placeholder="••••••••" required>
+    </div>
+    <button type="submit" class="btn-auth">Sign In</button>
+  </form>
+
+  <form id="signup-form" onsubmit="event.preventDefault(); location.href='dashboard.html'">
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" placeholder="John Doe" required>
+    </div>
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" placeholder="name@company.com" required>
+    </div>
+    <div class="form-group">
+      <label>Create Password</label>
+      <input type="password" placeholder="••••••••" required>
+    </div>
+    <button type="submit" class="btn-auth">Get Started Free</button>
+  </form>
+
+  <p class="footer-text">
+    By clicking continue, you agree to our <b>Terms of Service</b> and <b>Privacy Policy</b>.
+  </p>
+</div>
+
+<script>
+  function switchTab(type) {
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const loginTab = document.getElementById('login-tab');
+    const signupTab = document.getElementById('signup-tab');
+
+    if(type === 'login') {
+      loginForm.style.display = 'block';
+      signupForm.style.display = 'none';
+      loginTab.classList.add('active');
+      signupTab.classList.remove('active');
+    } else {
+      loginForm.style.display = 'none';
+      signupForm.style.display = 'block';
+      signupTab.classList.add('active');
+      loginTab.classList.remove('active');
+    }
+  }
+</script>
+
+</body>
+</html>
+
