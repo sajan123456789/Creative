@@ -1,306 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Creative Pro Editor — Final Master Version</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;700&family=Poppins:wght@400;700&family=Playfair+Display:wght@700&family=Montserrat:wght@400;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Pro | Advanced Builder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --accent: #3b82f6;
+            --panel-bg: #111827;
+            --canvas-bg: #f3f4f6;
+            --border: #374151;
+            --text-main: #f9fafb;
+        }
 
-<style>
-:root {
-  --primary: #38bdf8;
-  --bg: #020617;
-  --panel: #0b1220;
-  --border: rgba(255,255,255,0.08);
-  --text: #f8fafc;
-  --muted: #94a3b8;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #000; color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        /* TOP NAVIGATION */
+        .navbar {
+            height: 60px; background: var(--panel-bg); border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
+        }
 
-body { background: #000; color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        /* MAIN BUILDER LAYOUT */
+        .builder-body { display: flex; flex: 1; overflow: hidden; }
 
-/* TOP BAR */
-.top-bar {
-  height: 65px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 25px;
-  z-index: 100;
-}
+        /* LEFT SIDEBAR: COMPONENTS */
+        .sidebar-left { width: 280px; background: var(--panel-bg); border-right: 1px solid var(--border); padding: 20px; overflow-y: auto; }
+        
+        /* RIGHT SIDEBAR: PROPERTIES (Shopify Style) */
+        .sidebar-right { width: 300px; background: var(--panel-bg); border-left: 1px solid var(--border); padding: 20px; display: none; }
 
-.logo { font-weight: 800; font-size: 1.3rem; letter-spacing: -1px; }
-.logo span { color: var(--primary); }
+        /* CANVAS AREA */
+        .canvas-area { flex: 1; background: var(--canvas-bg); padding: 40px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; position: relative; }
+        
+        .page-container {
+            width: 100%; max-width: 850px; background: white; min-height: 1000px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.1); border-radius: 4px; position: relative; color: #000;
+        }
 
-/* MAIN LAYOUT */
-.editor-container { display: flex; flex: 1; height: calc(100vh - 65px); position: relative; }
+        /* SECTION HOVER CONTROLS */
+        .editable-section { position: relative; border: 1px solid transparent; transition: 0.2s; }
+        .editable-section:hover { border: 2px solid var(--accent); cursor: pointer; }
+        .section-tools {
+            position: absolute; right: -40px; top: 0; display: none;
+            flex-direction: column; gap: 5px;
+        }
+        .editable-section:hover .section-tools { display: flex; }
+        .tool-btn { width: 30px; height: 30px; background: var(--accent); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px; }
 
-/* SIDE PANEL */
-.side-panel {
-  width: 320px;
-  background: var(--panel);
-  border-right: 1px solid var(--border);
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  overflow-y: auto;
-}
+        /* UI ELEMENTS */
+        .widget-card {
+            background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 15px;
+            border-radius: 8px; margin-bottom: 12px; cursor: grab; transition: 0.3s; font-size: 14px;
+        }
+        .widget-card:hover { border-color: var(--accent); background: rgba(59, 130, 246, 0.1); }
+        
+        .prop-group { margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .prop-group label { display: block; font-size: 12px; color: #9ca3af; margin-bottom: 8px; text-transform: uppercase; }
+        input[type="color"], input[type="range"], select { width: 100%; padding: 8px; background: #1f2937; border: 1px solid var(--border); color: white; border-radius: 4px; }
 
-/* LIVE CODE EDITOR PANEL */
-#codePanel {
-  display: none;
-  width: 450px;
-  background: #0f172a;
-  border-right: 1px solid var(--border);
-  flex-direction: column;
-}
+        .btn { padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; border: none; font-size: 13px; }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-ghost { background: transparent; border: 1px solid var(--border); color: white; }
 
-#codeTextArea {
-  flex: 1;
-  background: #020617;
-  color: #10b981;
-  padding: 15px;
-  font-family: 'Courier New', monospace;
-  font-size: 14px;
-  border: none;
-  resize: none;
-}
-
-/* CANVAS & PREVIEW */
-.canvas {
-  flex: 1;
-  background: #00020a;
-  background-image: radial-gradient(#1e293b 0.5px, transparent 0.5px);
-  background-size: 24px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-  overflow-y: auto;
-}
-
-.preview-window {
-  width: 100%;
-  max-width: 900px;
-  background: #fff;
-  border-radius: 12px;
-  min-height: 1000px;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-  color: #000;
-  overflow: hidden;
-  transition: 0.4s;
-}
-
-.mobile-view { max-width: 375px; min-height: 667px; }
-
-/* UI BOXES */
-.tool-box {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  padding: 12px;
-  border-radius: 10px;
-}
-
-.draggable {
-  padding: 10px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  cursor: grab;
-  font-size: 0.8rem;
-  margin-bottom: 8px;
-  display: flex; align-items: center; gap: 10px;
-}
-.draggable:hover { border-color: var(--primary); background: rgba(56,189,248,0.1); }
-
-/* BUTTONS */
-.btn { padding: 8px 15px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; font-size: 0.8rem; transition: 0.3s; }
-.btn-primary { background: var(--primary); color: #000; }
-.btn-outline { background: transparent; border: 1px solid var(--border); color: #fff; }
-.btn-export { background: #10b981; color: white; }
-.btn-pdf { background: #ef4444; color: white; }
-
-.view-controls { display: flex; gap: 5px; margin-bottom: 15px; }
-
-/* PREVIEW DARK MODE */
-.preview-dark { background: #0f172a !important; color: white !important; }
-.preview-dark h1, .preview-dark h2, .preview-dark h3 { color: white !important; }
-.preview-dark p { color: #94a3b8 !important; }
-
-/* VIDEO BACKGROUND SECTION */
-.video-bg-section {
-    position: relative; height: 400px; overflow: hidden;
-    display: flex; align-items: center; justify-content: center; text-align: center; color: white;
-}
-.video-bg-section video {
-    position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
-    transform: translate(-50%, -50%); z-index: 0;
-}
-.video-overlay { position: relative; z-index: 1; background: rgba(0,0,0,0.4); width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; }
-
-[contenteditable]:focus { outline: 2px solid var(--primary); padding: 5px; border-radius: 4px; }
-</style>
+        /* PREVIEW MODES */
+        .mobile-view { max-width: 375px !important; }
+    </style>
 </head>
 <body>
 
-<header class="top-bar">
-  <div class="logo">Creative<span>.</span> Pro</div>
-  <div style="display: flex; gap: 8px;">
-    <button class="btn btn-outline" onclick="togglePreviewDark()">🌗 Preview Mode</button>
-    <button class="btn btn-outline" onclick="toggleCodeMode()">💻 Code Editor</button>
-    <button class="btn btn-export" onclick="downloadHTML()">📥 HTML</button>
-    <button class="btn btn-pdf" onclick="exportPDF()">📄 PDF</button>
-    <button class="btn btn-primary" onclick="alert('Website Published Successfully!')">Publish</button>
-  </div>
-</header>
+    <nav class="navbar">
+        <div class="logo"><i class="fas fa-cube"></i> Creative<span>Pro</span></div>
+        <div class="view-switcher">
+            <button class="btn btn-ghost" onclick="setMode('desktop')"><i class="fas fa-desktop"></i></button>
+            <button class="btn btn-ghost" onclick="setMode('mobile')"><i class="fas fa-mobile-alt"></i></button>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn btn-ghost" onclick="downloadHTML()">Export Code</button>
+            <button class="btn btn-primary" onclick="alert('Saving Project...')">Save Design</button>
+        </div>
+    </nav>
 
-<div class="editor-container">
-  <div id="codePanel">
-    <div style="padding:10px; background:#1e293b; font-size:0.8rem; display:flex; justify-content:space-between;">
-      <span>LIVE SOURCE CODE</span>
-      <span style="color:var(--primary); cursor:pointer;" onclick="toggleCodeMode()">✕</span>
+    <div class="builder-body">
+        <aside class="sidebar-left">
+            <h4 style="margin-bottom: 15px; font-size: 14px;">COMPONENTS</h4>
+            <div class="widget-card" draggable="true" ondragstart="drag(event)" id="hero">
+                <i class="fas fa-heading"></i> Hero Section
+            </div>
+            <div class="widget-card" draggable="true" ondragstart="drag(event)" id="features">
+                <i class="fas fa-star"></i> Feature Grid
+            </div>
+            <div class="widget-card" draggable="true" ondragstart="drag(event)" id="pricing">
+                <i class="fas fa-tags"></i> Pricing Table
+            </div>
+            <div class="widget-card" draggable="true" ondragstart="drag(event)" id="social">
+                <i class="fas fa-share-nodes"></i> Social Links
+            </div>
+            <div class="widget-card" draggable="true" ondragstart="drag(event)" id="video">
+                <i class="fas fa-play-circle"></i> Video Banner
+            </div>
+        </aside>
+
+        <main class="canvas-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="page-container" id="mainCanvas">
+                <div class="editable-section" onclick="editSection(this)" style="padding: 60px 20px; text-align: center;">
+                    <h1 style="font-size: 48px; font-weight: 800;">Double Click to Edit Anything</h1>
+                    <p style="color: #666; font-size: 18px; margin-top: 10px;">Drag components from the left sidebar to add new sections.</p>
+                </div>
+            </div>
+        </main>
+
+        <aside class="sidebar-right" id="propEditor">
+            <h4 style="margin-bottom: 20px; display: flex; justify-content: space-between;">
+                PROPERTIES <span onclick="closeEditor()" style="cursor:pointer">&times;</span>
+            </h4>
+            
+            <div class="prop-group">
+                <label>Background Color</label>
+                <input type="color" id="bgColor" oninput="updateStyle('backgroundColor', this.value)">
+            </div>
+
+            <div class="prop-group">
+                <label>Text Color</label>
+                <input type="color" id="textColor" oninput="updateStyle('color', this.value)">
+            </div>
+
+            <div class="prop-group">
+                <label>Font Size</label>
+                <input type="range" min="12" max="100" id="fontSize" oninput="updateStyle('fontSize', this.value + 'px')">
+            </div>
+
+            <div class="prop-group">
+                <label>Padding (Vertical)</label>
+                <input type="range" min="0" max="200" oninput="updateStyle('paddingTop', this.value + 'px'); updateStyle('paddingBottom', this.value + 'px')">
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="closeEditor()">Apply Changes</button>
+        </aside>
     </div>
-    <textarea id="codeTextArea" oninput="updateFromCode()" placeholder="Paste or edit HTML here..."></textarea>
-  </div>
 
-  <aside class="side-panel">
-    <div class="tool-box">
-      <label style="font-size: 0.75rem; color: var(--primary); font-weight: bold;">AI WEB MAGIC</label>
-      <input type="text" id="aiQuery" style="width:100%; background:rgba(0,0,0,0.2); border:1px solid var(--border); color:white; padding:8px; margin-top:5px; border-radius:5px;" placeholder="Ex: A Coffee Shop...">
-      <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="generateWithAI()">Auto Build</button>
-    </div>
+    <script>
+        let currentEditingElement = null;
 
-    <div class="tool-box">
-      <label style="font-size: 0.7rem; color: var(--muted); display:block; margin-bottom:10px;">DRAG COMPONENTS</label>
-      <div class="draggable" draggable="true" ondragstart="drag(event)" id="comp1"><i class="fas fa-align-left"></i> Text Block</div>
-      <div class="draggable" draggable="true" ondragstart="drag(event)" id="comp2"><i class="fas fa-th-large"></i> Features Area</div>
-      <div class="draggable" draggable="true" ondragstart="drag(event)" id="comp3"><i class="fas fa-image"></i> Image Box</div>
-      <div class="draggable" draggable="true" ondragstart="drag(event)" id="comp4"><i class="fas fa-envelope"></i> Contact Form</div>
-      <div class="draggable" draggable="true" ondragstart="drag(event)" id="comp5"><i class="fas fa-share-alt"></i> Social Icons</div>
-      <div class="draggable" draggable="true" ondragstart="drag(event)" id="comp6"><i class="fas fa-video"></i> Video Hero</div>
-    </div>
+        function allowDrop(ev) { ev.preventDefault(); }
+        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
 
-    <div class="tool-box">
-      <label style="font-size: 0.7rem; color: var(--muted); display:block; margin-bottom:10px;">INSTANT THEMES</label>
-      <button style="width:100%; padding:8px; margin-bottom:5px; cursor:pointer;" onclick="applyTheme('business')">Modern Business</button>
-      <button style="width:100%; padding:8px; margin-bottom:5px; cursor:pointer;" onclick="applyTheme('portfolio')">Portfolio</button>
-      <button style="width:100%; padding:8px; cursor:pointer;" onclick="applyTheme('gym')">Fitness Gym</button>
-    </div>
+        function drop(ev) {
+            ev.preventDefault();
+            const type = ev.dataTransfer.getData("text");
+            const section = document.createElement('div');
+            section.className = 'editable-section';
+            section.onclick = function() { editSection(this); };
+            
+            let content = "";
+            if(type === 'hero') {
+                content = `<div style="padding:80px 20px; text-align:center; background:#f9fafb">
+                            <h1 contenteditable="true" style="font-size:42px">New Hero Section</h1>
+                            <p contenteditable="true">Edit this subtitle as you like.</p>
+                           </div>`;
+            } else if(type === 'features') {
+                content = `<div style="display:flex; gap:20px; padding:40px;">
+                            <div style="flex:1; border:1px solid #eee; padding:20px; border-radius:8px"><h3>Feature 1</h3></div>
+                            <div style="flex:1; border:1px solid #eee; padding:20px; border-radius:8px"><h3>Feature 2</h3></div>
+                           </div>`;
+            } else if(type === 'pricing') {
+                content = `<div style="padding:40px; background:#fafafa; text-align:center">
+                            <h2>Pro Plan - $29</h2><button class="btn-primary btn" style="margin-top:10px">Buy Now</button>
+                           </div>`;
+            } else if(type === 'social') {
+                content = `<div style="padding:20px; display:flex; justify-content:center; gap:20px; font-size:24px">
+                            <i class="fab fa-instagram"></i><i class="fab fa-twitter"></i><i class="fab fa-facebook"></i>
+                           </div>`;
+            }
 
-    <div class="tool-box">
-      <label style="font-size: 0.7rem; color: var(--muted); display:block; margin-bottom:10px;">FONTS</label>
-      <select onchange="changeFont(this.value)" style="width:100%; padding:8px; background:#000; color:#fff; border:1px solid var(--border); border-radius:5px;">
-        <option value="'Plus Jakarta Sans', sans-serif">Jakarta Sans</option>
-        <option value="'Poppins', sans-serif">Poppins</option>
-        <option value="'Playfair Display', serif">Playfair Display</option>
-        <option value="'Inter', sans-serif">Inter</option>
-      </select>
-    </div>
-  </aside>
+            section.innerHTML = content + `<div class="section-tools">
+                                <button class="tool-btn" onclick="this.parentElement.parentElement.remove()"><i class="fas fa-trash"></i></button>
+                                <button class="tool-btn"><i class="fas fa-arrow-up"></i></button>
+                               </div>`;
+            
+            document.getElementById('mainCanvas').appendChild(section);
+        }
 
-  <main class="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <div class="view-controls">
-      <button class="btn btn-outline" onclick="setView('desktop')">🖥️ Desktop View</button>
-      <button class="btn btn-outline" onclick="setView('mobile')">📱 Mobile View</button>
-    </div>
+        function editSection(el) {
+            currentEditingElement = el;
+            document.getElementById('propEditor').style.display = 'block';
+            
+            // Sync current values to UI
+            const style = window.getComputedStyle(el);
+            document.getElementById('bgColor').value = rgbToHex(style.backgroundColor);
+            document.getElementById('textColor').value = rgbToHex(style.color);
+        }
 
-    <div class="preview-window" id="mainCanvas">
-      <div id="contentWrapper">
-        <section style="padding: 100px 40px; text-align: center;">
-          <h1 contenteditable="true" style="font-size: 3.5rem; font-weight: 800; margin-bottom: 20px;">The Ultimate Pro Builder.</h1>
-          <p contenteditable="true" style="color: #64748b; font-size: 1.2rem; max-width: 650px; margin: 0 auto;">Describe your site to AI or drag components to start building your professional web presence.</p>
-        </section>
-      </div>
-    </div>
-  </main>
-</div>
+        function updateStyle(prop, val) {
+            if(currentEditingElement) {
+                currentEditingElement.style[prop] = val;
+                // If it's the main container, also apply to children for better UX
+                if(prop === 'color') currentEditingElement.querySelectorAll('*').forEach(c => c.style.color = val);
+            }
+        }
 
-<script>
-  // Drag & Drop
-  function allowDrop(ev) { ev.preventDefault(); }
-  function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
-  function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    const container = document.getElementById("contentWrapper");
-    const newDiv = document.createElement("div");
-    newDiv.setAttribute("contenteditable", "true");
+        function closeEditor() { document.getElementById('propEditor').style.display = 'none'; }
 
-    if(data === "comp1") {
-      newDiv.style.padding = "40px";
-      newDiv.innerHTML = "<h2>Custom Heading</h2><p>Click here to change this text to your own content.</p>";
-    } else if(data === "comp2") {
-      newDiv.style.padding = "40px";
-      newDiv.innerHTML = "<div style='display:flex; gap:20px;'><div style='flex:1; border:1px solid #eee; padding:20px; border-radius:10px;'><h3>Feature A</h3><p>Detail A</p></div><div style='flex:1; border:1px solid #eee; padding:20px; border-radius:10px;'><h3>Feature B</h3><p>Detail B</p></div></div>";
-    } else if(data === "comp3") {
-      newDiv.innerHTML = "<div style='height:250px; background:#f1f5f9; display:flex; align-items:center; justify-content:center; border:2px dashed #ccc; margin:20px;'>IMAGE PLACEHOLDER</div>";
-    } else if(data === "comp4") {
-      newDiv.style.padding = "40px";
-      newDiv.innerHTML = "<h3>Contact Us</h3><input type='text' placeholder='Your Email' style='width:100%; padding:10px; margin-top:10px; border:1px solid #ddd; border-radius:5px;'>";
-    } else if(data === "comp5") {
-      newDiv.style.padding = "30px";
-      newDiv.style.textAlign = "center";
-      newDiv.innerHTML = `<div style="font-size: 2rem; display: flex; justify-content: center; gap: 20px;"><i class="fab fa-instagram"></i><i class="fab fa-twitter"></i><i class="fab fa-facebook"></i><i class="fab fa-linkedin"></i></div>`;
-    } else if(data === "comp6") {
-      newDiv.setAttribute("contenteditable", "false");
-      newDiv.innerHTML = `
-        <div class="video-bg-section">
-          <video autoplay muted loop><source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-loop-render-32535-preview.mp4" type="video/mp4"></video>
-          <div class="video-overlay"><h1 contenteditable="true" style="font-size:3rem;">Visual Impact</h1><p contenteditable="true">Cinematic Video Background</p></div>
-        </div>`;
-    }
-    container.appendChild(newDiv);
-    syncCode();
-  }
+        function setMode(mode) {
+            const canvas = document.getElementById('mainCanvas');
+            canvas.className = (mode === 'mobile') ? 'page-container mobile-view' : 'page-container';
+        }
 
-  // Exports
-  function downloadHTML() {
-    const content = document.getElementById('contentWrapper').innerHTML;
-    const blob = new Blob([`<html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body>${content}</body></html>`], {type: 'text/html'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'website.html';
-    a.click();
-  }
+        function downloadHTML() {
+            const content = document.getElementById('mainCanvas').innerHTML;
+            const blob = new Blob([`<html><head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></head><body>${content}</body></html>`], {type: 'text/html'});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'export.html';
+            a.click();
+        }
 
-  function exportPDF() {
-    const element = document.getElementById('contentWrapper');
-    html2pdf().from(element).save('my-design.pdf');
-  }
-
-  // AI & Themes
-  function generateWithAI() {
-    const q = document.getElementById('aiQuery').value;
-    document.querySelector('#mainCanvas h1').innerText = q ? q.toUpperCase() : "MY AI WEBSITE";
-    syncCode();
-  }
-
-  function applyTheme(type) {
-    const container = document.getElementById("contentWrapper");
-    if(type === 'business') container.innerHTML = `<section style="padding:80px 40px; background:#0f172a; color:white;"><h1>Business Strategy</h1><p>Growth hacking for startups.</p></section>`;
-    else if(type === 'portfolio') container.innerHTML = `<section style="padding:80px 40px;"><h1>Creative Designer</h1><p>Pixel perfect experiences.</p></section>`;
-    else if(type === 'gym') container.innerHTML = `<section style="padding:80px 40px; background:red; color:white;"><h1>BEAST MODE</h1><p>Join the revolution.</p></section>`;
-    syncCode();
-  }
-
-  // UI Settings
-  function togglePreviewDark() { document.getElementById('mainCanvas').classList.toggle('preview-dark'); }
-  function toggleCodeMode() { 
-    const p = document.getElementById('codePanel');
-    p.style.display = (p.style.display === 'flex') ? 'none' : 'flex';
-    if(p.style.display === 'flex') syncCode();
-  }
-  function syncCode() { document.getElementById('codeTextArea').value = document.getElementById('contentWrapper').innerHTML.trim(); }
-  function updateFromCode() { document.getElementById('contentWrapper').innerHTML = document.getElementById('codeTextArea').value; }
-  function changeFont(font) { document.getElementById('mainCanvas').style.fontFamily = font; }
-  function setView(mode) { document.getElementById('mainCanvas').className = (mode === 'mobile') ? 'preview-window mobile-view' : 'preview-window'; }
-</script>
-
+        function rgbToHex(rgb) {
+            if(!rgb || rgb.startsWith('rgba(0, 0, 0, 0)')) return '#ffffff';
+            let res = rgb.match(/\d+/g);
+            return "#" + ((1 << 24) + (parseInt(res[0]) << 16) + (parseInt(res[1]) << 8) + parseInt(res[2])).toString(16).slice(1);
+        }
+    </script>
 </body>
 </html>
