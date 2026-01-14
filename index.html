@@ -3,267 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Build high-performance websites without coding. SEO & AdSense optimized platform.">
-    <title>Creative | Professional No-Code Builder</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #38bdf8;
-            --bg-dark: #030712;
-            --bg-card: rgba(17, 24, 39, 0.7);
-            --text-main: #f3f4f6;
-            --text-muted: #94a3b8;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            line-height: 1.5;
-            background-image: radial-gradient(circle at top right, rgba(56,189,248,0.1), transparent 40%);
-        }
-
-        /* --- ADSENSE PLACEHOLDER --- */
-        .ad-space {
-            width: 100%;
-            max-width: 728px;
-            height: 90px;
-            background: rgba(255,255,255,0.03);
-            margin: 20px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px dashed #334155;
-            color: #475569;
-            font-size: 0.8rem;
-        }
-
-        /* --- NAVIGATION --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 8%;
-            position: sticky;
-            top: 0;
-            background: rgba(3, 7, 18, 0.9);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .logo { font-size: 1.4rem; font-weight: 800; }
-        .logo span { color: var(--primary); }
-
-        .btn {
-            background: var(--primary);
-            color: #000;
-            padding: 8px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        /* --- HERO (Compact Gaps) --- */
-        .hero {
-            padding: 60px 10% 40px; /* Reduced top/bottom padding */
-            text-align: center;
-        }
-
-        .badge {
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--primary);
-            padding: 4px 12px;
-            border-radius: 99px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            margin: 15px 0;
-            font-weight: 800;
-            line-height: 1.2;
-        }
-
-        .hero h1 span { color: var(--primary); }
-
-        .hero p {
-            max-width: 600px;
-            margin: 0 auto 25px;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        /* --- SECTIONS --- */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 40px 5%; /* Balanced Gaps */
-        }
-
-        .section-title { text-align: center; margin-bottom: 30px; }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
-        }
-
-        .card:hover { border-color: var(--primary); transform: translateY(-3px); }
-
-        /* --- FEATURES --- */
-        .feature-list {
-            background: rgba(255,255,255,0.02);
-            border-radius: 12px;
-            padding: 20px;
-        }
-
-        .feature-item {
-            display: flex;
-            gap: 15px;
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        /* --- PROFESSIONAL FOOTER --- */
-        footer {
-            background: #020617;
-            padding: 60px 8% 20px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 40px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-col h4 { color: #fff; margin-bottom: 20px; font-size: 1rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col ul li { margin-bottom: 10px; }
-        .footer-col ul li a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
-        .footer-col ul li a:hover { color: var(--primary); }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.8rem;
-            color: #475569;
-        }
-
-        @media (max-width: 768px) {
-            .hero { padding: 40px 5%; }
-            .nav-btn-main { width: 100%; display: block; text-align: center; }
-        }
-    </style>
+    <title>Creative | The Ultimate No-Code Builder</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <nav>
-        <div class="logo">Creative<span>.</span></div>
-        <div class="nav-links">
-            <a href="#" class="btn">Login</a>
+    <nav class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 25px 20px;">
+        <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary);">Creative.</div>
+        <div style="display: flex; gap: 15px;">
+            <a href="login.html" style="color: white; text-decoration: none; font-weight: 600; margin-top: 10px;">Login</a>
+            <a href="create.html" class="btn btn-primary">Start Building</a>
         </div>
     </nav>
 
-    <div class="ad-space">Google AdSense - Responsive Header Ad</div>
+    <div class="ad-slot">AdSense Banner Ad 728x90</div>
 
-    <header class="hero">
-        <span class="badge">Speed Optimized</span>
-        <h1>Build Faster With <br><span>No-Code Technology</span></h1>
-        <p>SEO friendly structure designed for maximum AdSense revenue and ultra-fast performance.</p>
-        <a href="#" class="btn" style="padding: 15px 35px;">Start Building Free</a>
+    <header class="container" style="text-align: center; padding: 80px 0;">
+        <h1 style="font-size: 4rem; font-weight: 800; line-height: 1.1; margin-bottom: 25px;">
+            Build Professional Sites <br><span style="color: var(--primary)">In Minutes.</span>
+        </h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; font-size: 1.2rem;">
+            A high-performance alternative to WordPress. SEO optimized, AdSense ready, and 100% free hosting compatible.
+        </p>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <a href="create.html" class="btn btn-primary" style="padding: 16px 40px;">Create Website Free</a>
+        </div>
     </header>
 
-    <section class="container">
-        <h2 class="section-title">One Platform, Endless Possibilities</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>E-Commerce</h3>
-                <p>Launch stores with built-in SEO and fast checkout.</p>
-            </div>
-            <div class="card">
-                <h3>Portfolios</h3>
-                <p>Showcase work with minimal, modern layouts.</p>
-            </div>
-            <div class="card">
-                <h3>SaaS Apps</h3>
-                <p>Build web apps with clean code ownership.</p>
-            </div>
+    <section class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; padding-bottom: 80px;">
+        <div class="glass-card">
+            <h3 style="margin-bottom: 15px;">E-Commerce Ready</h3>
+            <p style="color: var(--text-muted);">Launch premium stores without any database hassle.</p>
+        </div>
+        <div class="glass-card">
+            <h3 style="margin-bottom: 15px;">PWA Technology</h3>
+            <p style="color: var(--text-muted);">Convert your web apps to mobile apps with one click.</p>
+        </div>
+        <div class="glass-card">
+            <h3 style="margin-bottom: 15px;">No Code Export</h3>
+            <p style="color: var(--text-muted);">Get clean HTML/CSS code that you own forever.</p>
         </div>
     </section>
 
-    <div class="ad-space">Google AdSense - In-Article Ad</div>
+    <div class="ad-slot">AdSense Responsive Content Ad</div>
 
-    <section class="container">
-        <div class="feature-list">
-            <h2 style="margin-bottom: 20px; font-size: 1.5rem;">Why Professional Developers Choose Us</h2>
-            <div class="feature-item">
-                <span>⚡</span>
-                <div><strong>99+ PageSpeed Score</strong><p style="font-size: 0.85rem; color: var(--text-muted);">Better ranking on Google search results.</p></div>
-            </div>
-            <div class="feature-item">
-                <span>💰</span>
-                <div><strong>AdSense Ready</strong><p style="font-size: 0.85rem; color: var(--text-muted);">Optimized ad placements for higher CTR.</p></div>
-            </div>
-            <div class="feature-item">
-                <span>🛠️</span>
-                <div><strong>No Code Lock-in</strong><p style="font-size: 0.85rem; color: var(--text-muted);">Export your clean HTML/CSS anytime.</p></div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <div class="logo" style="margin-bottom: 15px;">Creative<span>.</span></div>
-                <p style="font-size: 0.9rem; color: var(--text-muted);">Making web development accessible for everyone, everywhere.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Platform</h4>
-                <ul>
-                    <li><a href="#">Websites</a></li>
-                    <li><a href="#">PWA Apps</a></li>
-                    <li><a href="#">Templates</a></li>
-                    <li><a href="#">Pricing</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="#">Documentation</a></li>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Community</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 Creative Inc. All rights reserved. Optimized for SEO & Performance.
-        </div>
+    <footer class="container" style="border-top: 1px solid var(--border); padding: 40px 0; text-align: center; color: var(--text-muted);">
+        <p>AdSense Friendly & SEO Optimized Platform &copy; 2026</p>
     </footer>
 
 </body>
