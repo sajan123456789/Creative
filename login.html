@@ -38,7 +38,7 @@ body {
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
-.logo-center { text-align: center; margin-bottom: 30px; font-weight: 800; font-size: 1.8rem; }
+.logo-center { text-align: center; margin-bottom: 30px; font-weight: 800; font-size: 1.8rem; text-decoration: none; display: block; color: #fff; }
 .logo-center span { color: var(--primary); }
 
 /* Social Login Buttons */
@@ -59,6 +59,7 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
+  text-decoration: none;
 }
 
 .btn-social:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--muted); }
@@ -130,17 +131,13 @@ input:focus { border-color: var(--primary); background: rgba(255,255,255,0.05); 
 <body>
 
 <div class="auth-card">
-  <div class="logo-center">Creative<span>.</span></div>
+  <a href="index.html" class="logo-center">Creative<span>.</span></a>
 
   <div class="social-auth">
-    <button class="btn-social" onclick="location.href='dashboard.html'">
+    <a href="dashboard.html" class="btn-social">
       <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google">
       Continue with Google
-    </button>
-    <button class="btn-social" onclick="location.href='dashboard.html'">
-      <img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub" style="filter: invert(1);">
-      Continue with GitHub
-    </button>
+    </a>
   </div>
 
   <div class="divider">OR USE EMAIL</div>
@@ -150,7 +147,7 @@ input:focus { border-color: var(--primary); background: rgba(255,255,255,0.05); 
     <div class="tab" id="signup-tab" onclick="switchTab('signup')">Create Account</div>
   </div>
 
-  <form id="login-form" onsubmit="event.preventDefault(); location.href='dashboard.html'">
+  <form id="login-form" onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
     <div class="form-group">
       <label>Email Address</label>
       <input type="email" placeholder="name@company.com" required>
@@ -162,7 +159,7 @@ input:focus { border-color: var(--primary); background: rgba(255,255,255,0.05); 
     <button type="submit" class="btn-auth">Sign In</button>
   </form>
 
-  <form id="signup-form" onsubmit="event.preventDefault(); location.href='dashboard.html'">
+  <form id="signup-form" onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
     <div class="form-group">
       <label>Full Name</label>
       <input type="text" placeholder="John Doe" required>
@@ -206,4 +203,3 @@ input:focus { border-color: var(--primary); background: rgba(255,255,255,0.05); 
 
 </body>
 </html>
-
