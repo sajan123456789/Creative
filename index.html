@@ -1,63 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Free Website & App Generator</title>
-  <link rel="stylesheet" href="css/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative | No-Code App & Website Builder</title>
+    <style>
+        :root {
+            --primary: #38bdf8;
+            --primary-dark: #0ea5e9;
+            --bg-dark: #030712;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --text-main: #f3f4f6;
+            --text-muted: #94a3b8;
+            --accent-glow: rgba(56, 189, 248, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Animated Background */
+            background-image: 
+                radial-gradient(circle at 0% 0%, var(--accent-glow) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, var(--accent-glow) 0%, transparent 40%);
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            position: sticky;
+            top: 0;
+            background: rgba(3, 7, 18, 0.8);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span { color: var(--primary); }
+
+        .nav-btn {
+            background: var(--primary);
+            color: #000;
+            padding: 10px 24px;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+        }
+
+        .badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent-glow);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            max-width: 650px;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* --- GRID SECTION --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 5%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            background: rgba(17, 24, 39, 0.9);
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        /* --- FEATURES LIST --- */
+        .feature-list {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .feature-item:last-child { border: none; }
+
+        .icon-box {
+            width: 45px;
+            height: 45px;
+            background: rgba(56, 189, 248, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 60px 8%;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 50px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive Fixes */
+        @media (max-width: 768px) {
+            .hero { padding: 0 5%; }
+            .cta-group { flex-direction: column; width: 100%; }
+            .nav-btn { display: none; } /* Simplified for mobile */
+        }
+    </style>
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
-<header class="header">
-  <div class="logo">Creative<span>.</span></div>
-  <a href="login.html" class="btn">Get Started</a>
-</header>
+    <nav>
+        <div class="logo">Creative<span>.</span></div>
+        <a href="#" class="nav-btn">Get Started</a>
+    </nav>
 
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <h1>Create Any Website or App<br><span>Without Coding</span></h1>
-  <p>
-    Build business websites, blogs, portfolios, ecommerce & apps.<br>
-    No hosting • No coding • Unlimited templates
-  </p>
-  <a href="login.html" class="btn big">Create Website Free</a>
-</section>
+    <header class="hero">
+        <div class="badge">✨ Next-Gen Web Builder</div>
+        <h1>Create Any Website <br><span>Without Coding</span></h1>
+        <p>The world's most powerful visual engine. Build business sites, e-commerce, and PWA apps in minutes, not months.</p>
+        
+        <div class="cta-group">
+            <a href="#" class="nav-btn" style="padding: 18px 40px; font-size: 1.1rem;">Create Your Website Free</a>
+        </div>
+    </header>
 
-<!-- ===== FEATURES ===== -->
-<section class="features">
-  <h2>What can you create?</h2>
+    <section class="container">
+        <h2 class="section-title">What can you create?</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Business Website</h3>
+                <p>Corporate identity with ultra-fast loading speeds.</p>
+            </div>
+            <div class="card">
+                <h3>E-Commerce</h3>
+                <p>Full-stack stores with zero backend management.</p>
+            </div>
+            <div class="card">
+                <h3>PWA Apps</h3>
+                <p>Turn any website into a downloadable mobile app instantly.</p>
+            </div>
+            <div class="card">
+                <h3>Portfolios</h3>
+                <p>Showcase your work with stunning visual galleries.</p>
+            </div>
+        </div>
+    </section>
 
-  <div class="grid">
-    <div class="card">Business Website</div>
-    <div class="card">Blog / News</div>
-    <div class="card">E-commerce</div>
-    <div class="card">Portfolio / Resume</div>
-    <div class="card">Landing Page</div>
-    <div class="card">Website → App (PWA)</div>
-  </div>
-</section>
+    <section class="container">
+        <h2 class="section-title">Why we're better</h2>
+        <div class="feature-list">
+            <div class="feature-item">
+                <div class="icon-box">🚀</div>
+                <div>
+                    <strong>Ultra-fast Performance</strong>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">No bulky WordPress plugins. Just pure, clean code.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="icon-box">🌍</div>
+                <div>
+                    <strong>Free Global Hosting</strong>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Deploy to GitHub or Netlify with one single click.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="icon-box">🔓</div>
+                <div>
+                    <strong>No Lock-in</strong>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">You own 100% of the code. Export anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- ===== WHY US ===== -->
-<section class="why">
-  <h2>Why this platform is better?</h2>
-  <ul>
-    <li>⚡ Ultra-fast (No backend, No crash)</li>
-    <li>🌍 Free hosting compatible (GitHub, Netlify)</li>
-    <li>📱 One-click App (PWA)</li>
-    <li>🔓 No lock-in, full code ownership</li>
-    <li>📈 SEO & AdSense friendly structure</li>
-  </ul>
-</section>
-
-<!-- ===== FOOTER ===== -->
-<footer class="footer">
-  <p>
-    This platform is designed to be <strong>AdSense Friendly</strong>, 
-    SEO optimized and lightweight for fast performance.
-  </p>
-  <p>© 2026 Creative • Free Website & App Generator</p>
-</footer>
+    <footer>
+        <p>&copy; 2026 Creative. Designed for high-performance AdSense & SEO.</p>
+    </footer>
 
 </body>
 </html>
