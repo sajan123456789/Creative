@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor — Creative Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #38bdf8;
+  --bg: #0f172a;
+  --panel: #020617;
+  --border: rgba(255,255,255,0.08);
+  --text: #f8fafc;
+  --muted: #94a3b8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+body { background: #1e293b; color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+/* TOP BAR */
+.top-bar {
+  height: 60px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.top-bar .actions { display: flex; gap: 15px; }
+
+/* MAIN LAYOUT */
+.editor-container { display: flex; flex: 1; }
+
+/* LEFT PANEL (TOOLS) */
+.side-panel {
+  width: 300px;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* CANVAS (PREVIEW AREA) */
+.canvas {
+  flex: 1;
+  background: #020617;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.preview-window {
+  width: 100%;
+  max-width: 800px;
+  background: #fff;
+  border-radius: 8px;
+  min-height: 1000px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  color: #000;
+  padding: 40px;
+}
+
+/* UI ELEMENTS */
+.control-group { margin-bottom: 20px; }
+label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+input, select {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: #fff;
+  outline: none;
+}
+
+.btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.btn-primary { background: var(--primary); color: #000; }
+.btn-outline { background: transparent; border: 1px solid var(--border); color: #fff; }
+
+[contenteditable]:hover { outline: 2px dashed var(--primary); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<header class="top-bar">
+  <div style="font-weight: 800; font-size: 1.2rem;">Creative<span>.</span> Editor</div>
+  <div class="actions">
+    <button class="btn btn-outline">Preview</button>
+    <button class="btn btn-primary" onclick="alert('Saving Project...')">Publish Site</button>
+  </div>
+</header>
+
+<div class="editor-container">
+  <aside class="side-panel">
+    <div class="control-group">
+      <label>Site Title</label>
+      <input type="text" id="siteTitle" placeholder="My New Website" oninput="updatePreview()">
+    </div>
+    
+    <div class="control-group">
+      <label>Primary Color</label>
+      <input type="color" value="#38bdf8" style="height: 45px; padding: 5px;">
+    </div>
+
+    <div class="control-group">
+      <label>Layout Type</label>
+      <select>
+        <option>Modern Landing Page</option>
+        <option>Classic Business</option>
+        <option>Minimal Portfolio</option>
+      </select>
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid var(--border); margin: 10px 0;">
+    
+    <p style="font-size: 0.8rem; color: var(--muted);">Click on the text in the preview to edit content directly.</p>
+  </aside>
+
+  <main class="canvas">
+    <div class="preview-window">
+      <h1 id="previewH1" contenteditable="true" style="font-size: 3rem; margin-bottom: 20px;">Welcome to your new site</h1>
+      <p contenteditable="true" style="font-size: 1.2rem; color: #444;">This is a live preview. You can click here and start typing to change the text.</p>
+      
+      <div style="margin-top: 50px; background: #f1f5f9; padding: 40px; border-radius: 12px; text-align: center;">
+        <h2 contenteditable="true">Feature Section</h2>
+        <p contenteditable="true">Describe your main service or product here.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  function updatePreview() {
+    const title = document.getElementById('siteTitle').value;
+    if(title) {
+      document.getElementById('previewH1').innerText = title;
+    }
+  }
+</script>
+
+</body>
+</html>
+
